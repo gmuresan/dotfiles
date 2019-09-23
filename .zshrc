@@ -3,6 +3,8 @@ stty -ixon
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/gmuresan/.oh-my-zsh
 
+export PGDATABASE=healthexchange
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -90,6 +92,8 @@ alias less='less -R'
 alias ag='/usr/local/bin/ag --pager=less'
 
 alias gitpsu='git push --set-upstream origin $(current_branch)'
+alias br='bin/rails'
+alias hrcp='heroku run rails console --app healthcare-exchange-comparison'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -135,7 +139,7 @@ export ZSH=/Users/gmuresan/.oh-my-zsh
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/striiv
-source /Users/gmuresan/Library/Python/2.7/bin/virtualenvwrapper.sh
+#source /Users/gmuresan/Library/Python/2.7/bin/virtualenvwrapper.sh
 
 
 export PATH=/Applications/MAMP/bin/php/php5.6.10/bin:$PATH
@@ -159,7 +163,7 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
+#. "/usr/local/opt/nvm/nvm.sh"
 
 unsetopt correct_all
 

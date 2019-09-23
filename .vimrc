@@ -1,6 +1,8 @@
 :inoremap <c-s> <Esc>:w<CR>
 :noremap <c-s> <Esc>:w<CR>
 
+:nmap cp :let @+ = expand("%")<cr>
+
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
@@ -11,6 +13,7 @@ autocmd Filetype php setlocal shiftwidth=4 ts=4 sts=0 sw=4 expandtab
 nnoremap <leader>n :NERDTreeToggle <cr>
 nnoremap <leader>m :MRU <cr>
 
+set mouse=nicr
 set number
 set smarttab
 set expandtab
@@ -21,8 +24,6 @@ set backspace=2
 set hlsearch
 let NERDTreeIgnore = ['\.pyc$']
 syntax on
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:jsx_ext_required = 0
 
 set smartindent
@@ -63,8 +64,6 @@ highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 
-let g:airline_theme='lucius'
-
 let g:closetag_html_style=1
 :au Filetype html,xml,xsl,js,jsx source ~/.vim/vim-addons/github-alvan-vim-closetag/plugin/closetag.vim
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js"
@@ -101,40 +100,49 @@ call SetupVAM()
 " ACTIVATING PLUGINS
 " OPTION 1, use VAMActivate
 VAMActivate mru
-VAMActivate fugitive ctrlp Syntastic EasyMotion Solarized
+VAMActivate github:ctrlpvim/ctrlp.vim
+"VAMActivate fugitive Syntastic EasyMotion Solarized
 VAMActivate github:scrooloose/nerdtree
 VAMActivate rails
 VAMActivate html5
-VAMActivate ag
+"VAMActivate ag
 VAMActivate trailing-whitespace
-VAMActivate molokai
-VAMActivate github:mustache/vim-mustache-handlebars
+"VAMActivate molokai
+" VAMActivate github:mustache/vim-mustache-handlebars
 VAMActivate github:scrooloose/syntastic
 VAMActivate github:powerline/powerline
 VAMActivate github:Valloric/YouCompleteMe
-VAMActivate github:ternjs/tern_for_vim
+"VAMActivate github:ternjs/tern_for_vim
 " VAMActivate github:Shougo/deoplete.nvim
-VAMActivate github:carlitux/deoplete-ternjs
-VAMActivate github:roxma/nvim-yarp
-VAMActivate github:roxma/vim-hug-neovim-rpc
-VAMActivate github:Shougo/neoinclude.vim
-VAMActivate github:jwalton512/vim-blade
-VAMActivate github:StanAngeloff/php.vim
+" VAMActivate github:carlitux/deoplete-ternjs
+"VAMActivate github:roxma/nvim-yarp
+"VAMActivate github:roxma/vim-hug-neovim-rpc
+"VAMActivate github:Shougo/neoinclude.vim
+"VAMActivate github:jwalton512/vim-blade
+"VAMActivate github:StanAngeloff/php.vim
 VAMActivate github:airblade/vim-gitgutter
 VAMActivate github:mxw/vim-jsx
 VAMActivate github:isRuslan/vim-es6
 VAMActivate github:pangloss/vim-javascript
 VAMActivate github:vim-syntastic/syntastic
-VAMActivate github:kewah/vim-stylefmt
+"VAMActivate github:kewah/vim-stylefmt
 VAMActivate github:vim-airline/vim-airline
 " VAMActivate github:alvan/vim-closetag
-VAMActivate github:Valloric/MatchTagAlways
-VAMActivate github:tpope/vim-surround
-VAMActivate github:vim-airline/vim-airline-themes
+" VAMActivate github:Valloric/MatchTagAlways
+"VAMActivate github:tpope/vim-surround
+"VAMActivate github:vim-airline/vim-airline-themes
 VAMActivate github:tpope/vim-rails
 VAMActivate github:galooshi/vim-import-js
-VAMActivate github:ngmy/vim-rubocop
-VAMActivate github:mhinz/vim-grepper
+"VAMActivate github:ngmy/vim-rubocop
+"VAMActivate github:mhinz/vim-grepper
+"VAMActivate github:cocopon/iceberg.vim
+VAMActivate github:joshdick/onedark.vim
+VAMActivate github:mileszs/ack.vim
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 
 " OPTION 2: use call vam#Acmxw/vim-jsxtivateAddons
@@ -162,3 +170,32 @@ augroup BWCCreateDir
    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 
+" Use ag for file search
+set grepprg=ag\ --nogroup\ --nocolor
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+let g:ycm_filepath_blacklist = {}
+
+syntax on
