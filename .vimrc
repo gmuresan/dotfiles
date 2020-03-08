@@ -101,7 +101,8 @@ call SetupVAM()
 " OPTION 1, use VAMActivate
 VAMActivate mru
 VAMActivate github:ctrlpvim/ctrlp.vim
-"VAMActivate fugitive Syntastic EasyMotion Solarized
+"VAMActivate Syntastic EasyMotion Solarized
+VAMActivate fugitive
 VAMActivate github:scrooloose/nerdtree
 VAMActivate rails
 VAMActivate html5
@@ -129,7 +130,7 @@ VAMActivate github:vim-syntastic/syntastic
 VAMActivate github:vim-airline/vim-airline
 " VAMActivate github:alvan/vim-closetag
 " VAMActivate github:Valloric/MatchTagAlways
-"VAMActivate github:tpope/vim-surround
+VAMActivate github:tpope/vim-surround
 "VAMActivate github:vim-airline/vim-airline-themes
 VAMActivate github:tpope/vim-rails
 VAMActivate github:galooshi/vim-import-js

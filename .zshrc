@@ -168,3 +168,4 @@ export NVM_DIR="$HOME/.nvm"
 unsetopt correct_all
 
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+export PATH="/usr/local/opt/libxml2/bin:$PATH"
