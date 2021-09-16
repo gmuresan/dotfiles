@@ -3,8 +3,6 @@ stty -ixon
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/gmuresan/.oh-my-zsh
 
-export PGDATABASE=healthexchange
-
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -49,7 +47,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vi-mode)
 
 # User configuration
 
@@ -93,7 +91,9 @@ alias ag='/usr/local/bin/ag --pager=less'
 
 alias gitpsu='git push --set-upstream origin $(current_branch)'
 alias br='bin/rails'
-alias hrcp='heroku run rails console --app healthcare-exchange-comparison'
+alias mp='cd ~/makersplace/digital-collectibles/collectibles && workon mp3.8-3'
+alias mpj='cd ~/makersplace/digital-collectibles/collectibles/frontend/js && workon mp3.8-3'
+alias mph='cd ~/makersplace/digital-collectibles/ && workon mp3.8-3 && honcho start -f Procfile.local'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -109,7 +109,7 @@ alias dc="git diff --cached"
 alias fp="git format-patch"
 alias g="git !git gui &"
 alias gr="git log --graph"
-alias go="git log --graph --pretty=oneline --abbrev-commit"
+#alias go="git log --graph --pretty=oneline --abbrev-commit"
 alias k="git !gitk &"
 alias ka="git !gitk --all &"
 alias lc="git log ORIG_HEAD.. --stat --no-merges"
@@ -126,10 +126,6 @@ alias stm="git status --untracked=no"
 alias stfu="git status --untracked=no"
 alias pullsrb="git !git stash save && git pull --rebase && git stash pop && echo 'Success!'"
 
-alias cla='cd ~/clone/adserver && npm run debug'
-alias clf='cd ~/clone/frontend && npm run watch'
-alias clb='cd ~/clone/backend && npm run debug'
-
 alias vim="stty -ixon; nvim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
@@ -137,23 +133,7 @@ ttyctl -f
 [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"# Path to your oh-my-zsh installation.
 export ZSH=/Users/gmuresan/.oh-my-zsh
 
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/striiv
-#source /Users/gmuresan/Library/Python/2.7/bin/virtualenvwrapper.sh
-
-
-export PATH=/Applications/MAMP/bin/php/php5.6.10/bin:$PATH
-export PATH=~/.composer/vendor/bin:$PATH
-
-alias oc="cd ~/ordercircle/ordercircle"
-alias ocl="cat ~/ordercircle/ordercircle/app/storage/logs/laravel.log"
-alias vau="cd ~/Homestead && vagrant up"
-alias vas="cd ~/Homestead && vagrant ssh"
-
 alias am="cd ~/allovance/allovance"
-alias hs="cd ~/healthsherpa/ExchangeCompare"
-alias hs2="cd ~/healthsherpa/ExchangeCompare2"
-
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -169,3 +149,14 @@ unsetopt correct_all
 
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
+
+export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+alias java11='export JAVA_HOME=$JAVA_11_HOME'
+java11
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/makersplace
+source /usr/local/bin/virtualenvwrapper.sh
+

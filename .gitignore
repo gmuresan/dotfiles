@@ -1,5 +1,5 @@
 *
-
+!.config/nvim/init.vim
 !.gitignore
 !.vimrc
 !.zshrc

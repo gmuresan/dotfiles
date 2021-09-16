@@ -9,9 +9,24 @@ nmap <CR> o<Esc>
 autocmd BufWritePre * :FixWhitespace
 
 autocmd Filetype php setlocal shiftwidth=4 ts=4 sts=0 sw=4 expandtab
+autocmd Filetype py setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 nnoremap <leader>n :NERDTreeToggle <cr>
 nnoremap <leader>m :MRU <cr>
+nnoremap <leader>d odebugger;<ESC>
+nnoremap <leader>p oimport pdb; pdb.set_trace()<ESC>
+nnoremap <leader>o ofrom celery.contrib import rdb; rdb.set_trace()<ESC>
+nnoremap <leader>l :AutoformatLine<CR>
+vnoremap <leader>l :AutoformatLine<CR>
+
+let g:autoformat_verbosemode= 0
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+let g:formatters_py = ['yapf']
+let g:formatterpath = ['/Users/gmuresan/.virtualenvs/mp3.8-3/bin/yapf', '/Users/gmuresan/.virtualenvs/mp3.8-3/bin/']
+
+let g:kite_supported_languages = ['*']
 
 set mouse=nicr
 set number
@@ -30,11 +45,17 @@ set smartindent
 
 set clipboard=unnamed
 
-set laststatus=2
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-set statusline+=%f
+"set laststatus=2
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"set statusline+=%f
+"
+let g:airline_inactive_collapse=1
+let g:airline_highlighting_cache = 0
+let g:airline_stl_path_style = 'short'
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_section_y = ''
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_loc_list_height = 3
@@ -53,11 +74,27 @@ let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_ruby_rubocop_exec = 'bin/rubocop'
 let g:syntastic_ruby_rubocop_args = ['--cache']
 
+let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_pyflakes_exe = 'python3 -m pyflakes'
+
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
 set autoread
 
 au BufWritePost *.js checktime
 au BufWritePost *.jsx checktime
 au BufWritePost *.rb checktime
+
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
+
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\   'css': ['prettier'],
+\}
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -65,7 +102,7 @@ highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColumn
 
 let g:closetag_html_style=1
-:au Filetype html,xml,xsl,js,jsx source ~/.vim/vim-addons/github-alvan-vim-closetag/plugin/closetag.vim
+" :au Filetype html,xml,xsl,js,jsx source ~/.vim/vim-addons/github-alvan-vim-closetag/plugin/closetag.vim
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js"
 
 let g:mta_filetypes = {
@@ -104,15 +141,14 @@ VAMActivate github:ctrlpvim/ctrlp.vim
 "VAMActivate Syntastic EasyMotion Solarized
 VAMActivate fugitive
 VAMActivate github:scrooloose/nerdtree
-VAMActivate rails
+"VAMActivate rails
 VAMActivate html5
 "VAMActivate ag
 VAMActivate trailing-whitespace
 "VAMActivate molokai
 " VAMActivate github:mustache/vim-mustache-handlebars
-VAMActivate github:scrooloose/syntastic
 VAMActivate github:powerline/powerline
-VAMActivate github:Valloric/YouCompleteMe
+"VAMActivate github:Valloric/YouCompleteMe
 "VAMActivate github:ternjs/tern_for_vim
 " VAMActivate github:Shougo/deoplete.nvim
 " VAMActivate github:carlitux/deoplete-ternjs
@@ -122,23 +158,31 @@ VAMActivate github:Valloric/YouCompleteMe
 "VAMActivate github:jwalton512/vim-blade
 "VAMActivate github:StanAngeloff/php.vim
 VAMActivate github:airblade/vim-gitgutter
-VAMActivate github:mxw/vim-jsx
+VAMActivate github:maxmellon/vim-jsx-pretty
 VAMActivate github:isRuslan/vim-es6
 VAMActivate github:pangloss/vim-javascript
-VAMActivate github:vim-syntastic/syntastic
+"VAMActivate github:vim-syntastic/syntastic
 "VAMActivate github:kewah/vim-stylefmt
 VAMActivate github:vim-airline/vim-airline
 " VAMActivate github:alvan/vim-closetag
 " VAMActivate github:Valloric/MatchTagAlways
-VAMActivate github:tpope/vim-surround
+"VAMActivate github:tpope/vim-surround
 "VAMActivate github:vim-airline/vim-airline-themes
-VAMActivate github:tpope/vim-rails
-VAMActivate github:galooshi/vim-import-js
+"VAMActivate github:tpope/vim-rails
+"VAMActivate github:galooshi/vim-import-js
 "VAMActivate github:ngmy/vim-rubocop
 "VAMActivate github:mhinz/vim-grepper
 "VAMActivate github:cocopon/iceberg.vim
 VAMActivate github:joshdick/onedark.vim
 VAMActivate github:mileszs/ack.vim
+VAMActivate github:vim-python/python-syntax
+VAMActivate github:nvie/vim-flake8
+VAMActivate github:Chiel92/vim-autoformat
+VAMActivate github:dense-analysis/ale
+"VAMActivate github:google/vim-maktaba
+"VAMActivate github:google/vim-codefmt
+"VAMActivate github:google/vim-glaive
+VAMActivate github:tomlion/vim-solidity
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 if executable('ag')
@@ -200,3 +244,8 @@ endif
 let g:ycm_filepath_blacklist = {}
 
 syntax on
+let python_highlight_all=1
+
+set completeopt+=noselect
+set completeopt+=menuone
+
