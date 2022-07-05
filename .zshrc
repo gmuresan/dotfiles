@@ -1,7 +1,7 @@
 stty -ixon
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/gmuresan/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -55,6 +55,10 @@ export NODE_PATH='/usr/local/lib/node_modules'
 # export MANPATH="/usr/local/man:$MANPATH"
 #export WORKON_HOME=~/.Envs
 
+
+export GOPATH="/Users/676616/go"
+export PATH=$GOPATH/bin:$PATH
+
 source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
@@ -87,13 +91,12 @@ export EDITOR='vim'
 alias k9='kill -9 %'
 
 alias less='less -R'
-alias ag='/usr/local/bin/ag --pager=less'
+alias ag='/opt/homebrew/bin/ag --pager=less'
 
 alias gitpsu='git push --set-upstream origin $(current_branch)'
 alias br='bin/rails'
-alias mp='cd ~/makersplace/digital-collectibles/collectibles && workon mp3.8-3'
-alias mpj='cd ~/makersplace/digital-collectibles/collectibles/frontend/js && workon mp3.8-3'
-alias mph='cd ~/makersplace/digital-collectibles/ && workon mp3.8-3 && honcho start -f Procfile.local'
+alias mp='cd ~/extension/browser-extension'
+alias mpp='cd ~/extension/nft-extension-pricing'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -131,9 +134,7 @@ alias vim="stty -ixon; nvim"
 ttyctl -f
 
 [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"# Path to your oh-my-zsh installation.
-export ZSH=/Users/gmuresan/.oh-my-zsh
-
-alias am="cd ~/allovance/allovance"
+# export ZSH=/Users/gmuresan/.oh-my-zsh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -143,6 +144,8 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 #. "/usr/local/opt/nvm/nvm.sh"
 
 unsetopt correct_all
@@ -155,8 +158,14 @@ alias java11='export JAVA_HOME=$JAVA_11_HOME'
 java11
 export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/makersplace
-source /usr/local/bin/virtualenvwrapper.sh
+#export VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
+#export WORKON_HOME=$HOME/.virtualenvs
+#export PROJECT_HOME=$HOME/makersplace
+#source /usr/local/bin/virtualenvwrapper.sh
 
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi

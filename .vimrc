@@ -1,3 +1,5 @@
+set nocompatible | filetype indent plugin on | syn on
+
 :inoremap <c-s> <Esc>:w<CR>
 :noremap <c-s> <Esc>:w<CR>
 
@@ -10,7 +12,11 @@ autocmd BufWritePre * :FixWhitespace
 
 autocmd Filetype php setlocal shiftwidth=4 ts=4 sts=0 sw=4 expandtab
 autocmd Filetype py setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd Filetype ts setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd Filetype js setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd Filetype svelte setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
+" Keyboard shortcuts
 nnoremap <leader>n :NERDTreeToggle <cr>
 nnoremap <leader>m :MRU <cr>
 nnoremap <leader>d odebugger;<ESC>
@@ -26,15 +32,15 @@ let g:autoformat_remove_trailing_spaces = 0
 let g:formatters_py = ['yapf']
 let g:formatterpath = ['/Users/gmuresan/.virtualenvs/mp3.8-3/bin/yapf', '/Users/gmuresan/.virtualenvs/mp3.8-3/bin/']
 
-let g:kite_supported_languages = ['*']
 
+set cursorline
 set mouse=nicr
 set number
 set smarttab
 set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set backspace=2
 set hlsearch
 let NERDTreeIgnore = ['\.pyc$']
@@ -50,13 +56,13 @@ set clipboard=unnamed
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 "set statusline+=%f
-"
-let g:airline_inactive_collapse=1
-let g:airline_highlighting_cache = 0
-let g:airline_stl_path_style = 'short'
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline_section_y = ''
 
+" Airline Settings
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+
+
+" Syntastic Settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_loc_list_height = 3
 let g:syntastic_auto_loc_list = 2
@@ -70,12 +76,18 @@ let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_warning_symbol = '💩'
 let g:syntastic_javascript_eslint_args = ['--fix']
 
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_ruby_rubocop_exec = 'bin/rubocop'
-let g:syntastic_ruby_rubocop_args = ['--cache']
+" let g:ale_svelte_svelteserver_use_global = 1
 
-let g:syntastic_python_python_exec = 'python3'
-let g:syntastic_python_pyflakes_exe = 'python3 -m pyflakes'
+" let g:syntastic_typescript_checkers = ['tsserver', 'prettier']
+" let g:syntastic_svelte_checkers = ['svelteserver', 'prettier']
+" let g:svelte_preprocessors = ['ts']
+
+" let g:syntastic_ruby_checkers = ['rubocop']
+" let g:syntastic_ruby_rubocop_exec = 'bin/rubocop'
+" let g:syntastic_ruby_rubocop_args = ['--cache']
+
+" let g:syntastic_python_python_exec = 'python3'
+" let g:syntastic_python_pyflakes_exe = 'python3 -m pyflakes'
 
 let g:vim_jsx_pretty_highlight_close_tag = 1
 
@@ -83,18 +95,34 @@ set autoread
 
 au BufWritePost *.js checktime
 au BufWritePost *.jsx checktime
+au BufWritePost *.ts checktime
+au BufWritePost *.typescript checktime
+au BufWritePost *.svelte checktime
 au BufWritePost *.rb checktime
 
 augroup FiletypeGroup
     autocmd!
     au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+    au BufNewFile,BufRead *.ts set filetype=typescript
 augroup END
 
+" let g:svelte_preprocessor_tags = [
+  "\ { 'name': 'ts', 'tag': 'script', 'as': 'typescript' }
+  "\ ]
+
+"let g:ale_linters = {
+"\    "svelte": ['svelteserver'],
+"\}
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
+\   'ts': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\   'svelte': ['prettier', 'eslint', 'svelteserver'],
 \   'css': ['prettier'],
 \}
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -112,28 +140,35 @@ let g:mta_filetypes = {
    \ 'js' : 1,
    \ 'jsx' : 1,
    \ 'javascript.jsx' : 1,
+   \ 'svelte' : 1,
+   \ 'ts' : 1,
+   \ 'typescript' : 1,
    \}
 
 "echo 'runtime! ftplugin/html.vim' > ~/.vim/ftplugin/cjsx.vim
-
 fun! SetupVAM()
- let c = get(g:, 'vim_addon_manager', {})
- let g:vim_addon_manager = c
- let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
- " Force your ~/.vim/after directory to be last in &rtp always:
- " let g:vim_addon_manager.rtp_list_hook = 'vam#ForceUsersAfterDirectoriesToBeLast'
- " most used options you may want to use:
- " let c.log_to_buf = 1
- " let c.auto_install = 0
- let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
- if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
-   execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '
-       \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
- endif
- " This provides the VAMActivate command, you could be passing plugin names, too
- call vam#ActivateAddons([], {})
+  let c = get(g:, 'vim_addon_manager', {})
+  let g:vim_addon_manager = c
+  let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
+
+  " Force your ~/.vim/after directory to be last in &rtp always:
+  " let g:vim_addon_manager.rtp_list_hook = 'vam#ForceUsersAfterDirectoriesToBeLast'
+
+  " most used options you may want to use:
+  " let c.log_to_buf = 1
+  " let c.auto_install = 0
+  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+  if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
+    execute '!git clone --depth=1'
+        \       'https://github.com/MarcWeber/vim-addon-manager'
+        \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
+  endif
+
+  " This provides the VAMActivate command, you could be passing plugin names, too
+  call vam#ActivateAddons([], {})
 endfun
 call SetupVAM()
+
 " ACTIVATING PLUGINS
 " OPTION 1, use VAMActivate
 VAMActivate mru
@@ -142,13 +177,27 @@ VAMActivate github:ctrlpvim/ctrlp.vim
 VAMActivate fugitive
 VAMActivate github:scrooloose/nerdtree
 "VAMActivate rails
-VAMActivate html5
+"VAMActivate html5
 "VAMActivate ag
 VAMActivate trailing-whitespace
 "VAMActivate molokai
 " VAMActivate github:mustache/vim-mustache-handlebars
-VAMActivate github:powerline/powerline
+" VAMActivate github:powerline/powerline
 "VAMActivate github:Valloric/YouCompleteMe
+
+"VAMActivate github:prabirshrestha/asyncomplete.vim
+"VAMActivate github:runoshun/tscompletejob
+"VAMActivate github:prabirshrestha/asyncomplete-tscompletejob.vim
+
+"call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
+    "\ 'name': 'tscompletejob',
+    "\ 'allowlist': ['typescript', 'ts', 'svelte'],
+    "\ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
+    "\ }))
+"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
 "VAMActivate github:ternjs/tern_for_vim
 " VAMActivate github:Shougo/deoplete.nvim
 " VAMActivate github:carlitux/deoplete-ternjs
@@ -158,31 +207,92 @@ VAMActivate github:powerline/powerline
 "VAMActivate github:jwalton512/vim-blade
 "VAMActivate github:StanAngeloff/php.vim
 VAMActivate github:airblade/vim-gitgutter
-VAMActivate github:maxmellon/vim-jsx-pretty
+"VAMActivate github:maxmellon/vim-jsx-pretty
 VAMActivate github:isRuslan/vim-es6
 VAMActivate github:pangloss/vim-javascript
 "VAMActivate github:vim-syntastic/syntastic
 "VAMActivate github:kewah/vim-stylefmt
-VAMActivate github:vim-airline/vim-airline
 " VAMActivate github:alvan/vim-closetag
 " VAMActivate github:Valloric/MatchTagAlways
 "VAMActivate github:tpope/vim-surround
-"VAMActivate github:vim-airline/vim-airline-themes
 "VAMActivate github:tpope/vim-rails
 "VAMActivate github:galooshi/vim-import-js
 "VAMActivate github:ngmy/vim-rubocop
 "VAMActivate github:mhinz/vim-grepper
 "VAMActivate github:cocopon/iceberg.vim
 VAMActivate github:joshdick/onedark.vim
-VAMActivate github:mileszs/ack.vim
-VAMActivate github:vim-python/python-syntax
+"VAMActivate github:mileszs/ack.vim
+"VAMActivate github:vim-python/python-syntax
 VAMActivate github:nvie/vim-flake8
 VAMActivate github:Chiel92/vim-autoformat
-VAMActivate github:dense-analysis/ale
+"VAMActivate github:dense-analysis/ale
 "VAMActivate github:google/vim-maktaba
 "VAMActivate github:google/vim-codefmt
 "VAMActivate github:google/vim-glaive
 VAMActivate github:tomlion/vim-solidity
+VAMActivate github:evanleck/vim-svelte
+VAMActivate github:othree/html5.vim
+VAMActivate github:ruanyl/coverage.vim " Coverage report in gutter
+VAMActivate github:HerringtonDarkholme/yats.vim " TS highlighting
+" VAMActivate github:neoclide/coc.nvim
+
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+
+" Make sure you use single quotes
+"
+"" Or build from source code by using yarn: https://yarnpkg.com
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+Plug 'codechips/coc-svelte', {'do': 'npm install'}
+Plug 'morhetz/gruvbox'
+
+" Plug 'godlygeek/tabular' " markdown
+" Plug 'preservim/vim-markdown' " markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' } " markdown
+
+" Plug 'junegunn/limelight.vim' " highlighting
+" Plug 'junegunn/goyo.vim' " highlighting
+"
+Plug 'ray-x/go.nvim' " golang
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+
+" Initialize plugin system
+call plug#end()
+
+" Specify the path to `coverage.json` file relative to your current working directory.
+let g:coverage_json_report_path = 'coverage/coverage-final.json'
+
+" Define the symbol display for covered lines
+let g:coverage_sign_covered = '⦿'
+
+" Define the interval time of updating the coverage lines
+let g:coverage_interval = 5000
+
+" Do not display signs on covered lines
+let g:coverage_show_covered = 0
+
+" Display signs on uncovered lines
+let g:coverage_show_uncovered = 1
+
+"VAMActivate github:google/vim-maktaba
+"VAMActivate github:google/vim-coverage
+" Also add Glaive, which is used to configure coverage's maktaba flags. See
+" `:help :Glaive` for usage.
+"VAMActivate github:google/vim-glaive
+"call glaive#Install()
+" Optional: Enable coverage's default mappings on the <Leader>C prefix.
+" Glaive coverage plugin[mappings]
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 if executable('ag')
@@ -248,4 +358,53 @@ let python_highlight_all=1
 
 set completeopt+=noselect
 set completeopt+=menuone
+
+
+""" COC CONFIG
+let g:coc_node_path = '$HOME/.nvm/versions/node/v16.14.1/bin/node'
+
+nmap ff  (coc-format-selected)
+nmap rn (coc-rename)
+nmap  gd (coc-definition)
+nmap  gy (coc-type-definition)
+nmap  gi (coc-implementation)
+nmap  gr (coc-references)
+
+set updatetime=300
+set shortmess+=c " don't give |ins-completion-menu| messages.
+
+" Use K to show documentation in preview window
+nnoremap  K :call show_documentation()
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+
+if !exists('g:context_filetype#same_filetypes')
+  let g:context_filetype#filetypes = {}
+endif
+
+let g:context_filetype#filetypes.svelte =
+\ [
+\   {'filetype' : 'javascript', 'start' : '<script>', 'end' : '</script>'},
+\   {
+\     'filetype': 'typescript',
+\     'start': '<script\%( [^>]*\)\? \%(ts\|lang="\%(ts\|typescript\)"\)\%( [^>]*\)\?>',
+\     'end': '',
+\   },
+\   {'filetype' : 'css', 'start' : '<style \?.*>', 'end' : '</style>'},
+\ ]
+
+let g:ft = ''
+
+
+highlight CocFadeOut ctermfg=Red  guifg=#ff0000
+
+""" END COC CONFIG
 
