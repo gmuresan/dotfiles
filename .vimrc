@@ -236,39 +236,6 @@ VAMActivate github:ruanyl/coverage.vim " Coverage report in gutter
 VAMActivate github:HerringtonDarkholme/yats.vim " TS highlighting
 " VAMActivate github:neoclide/coc.nvim
 
-call plug#begin()
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-
-" Make sure you use single quotes
-"
-"" Or build from source code by using yarn: https://yarnpkg.com
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-Plug 'codechips/coc-svelte', {'do': 'npm install'}
-Plug 'morhetz/gruvbox'
-
-" Plug 'godlygeek/tabular' " markdown
-" Plug 'preservim/vim-markdown' " markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' } " markdown
-
-" Plug 'junegunn/limelight.vim' " highlighting
-" Plug 'junegunn/goyo.vim' " highlighting
-"
-Plug 'ray-x/go.nvim' " golang
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-
-" Initialize plugin system
-call plug#end()
 
 " Specify the path to `coverage.json` file relative to your current working directory.
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
