@@ -33,7 +33,6 @@ let g:python3_host_prog = '/usr/local/bin/python3'
 "
 autocmd BufWritePre *.go :silent! lua require('go.format').gofmt()
 
-
 call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
@@ -121,6 +120,5 @@ inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 """ END COC CONFIG
 
 colorscheme carbonfox
-
 source ~/.vimrc
 
