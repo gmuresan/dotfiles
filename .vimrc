@@ -236,40 +236,6 @@ VAMActivate github:ruanyl/coverage.vim " Coverage report in gutter
 VAMActivate github:HerringtonDarkholme/yats.vim " TS highlighting
 " VAMActivate github:neoclide/coc.nvim
 
-call plug#begin()
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-
-" Make sure you use single quotes
-"
-"" Or build from source code by using yarn: https://yarnpkg.com
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-Plug 'codechips/coc-svelte', {'do': 'npm install'}
-Plug 'morhetz/gruvbox'
-
-" Plug 'godlygeek/tabular' " markdown
-" Plug 'preservim/vim-markdown' " markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' } " markdown
-
-" Plug 'junegunn/limelight.vim' " highlighting
-" Plug 'junegunn/goyo.vim' " highlighting
-"
-Plug 'ray-x/go.nvim' " golang
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-
-" Initialize plugin system
-call plug#end()
-
 " Specify the path to `coverage.json` file relative to your current working directory.
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 
@@ -333,9 +299,10 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
 
+let g:ctrlp_show_hidden=1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden --ignore .git -g ""'
 endif
 
 if (empty($TMUX))
@@ -359,52 +326,6 @@ let python_highlight_all=1
 set completeopt+=noselect
 set completeopt+=menuone
 
-
-""" COC CONFIG
-let g:coc_node_path = '$HOME/.nvm/versions/node/v16.14.1/bin/node'
-
-nmap ff  (coc-format-selected)
-nmap rn (coc-rename)
-nmap  gd (coc-definition)
-nmap  gy (coc-type-definition)
-nmap  gi (coc-implementation)
-nmap  gr (coc-references)
-
-set updatetime=300
-set shortmess+=c " don't give |ins-completion-menu| messages.
-
-" Use K to show documentation in preview window
-nnoremap  K :call show_documentation()
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-
-
-if !exists('g:context_filetype#same_filetypes')
-  let g:context_filetype#filetypes = {}
-endif
-
-let g:context_filetype#filetypes.svelte =
-\ [
-\   {'filetype' : 'javascript', 'start' : '<script>', 'end' : '</script>'},
-\   {
-\     'filetype': 'typescript',
-\     'start': '<script\%( [^>]*\)\? \%(ts\|lang="\%(ts\|typescript\)"\)\%( [^>]*\)\?>',
-\     'end': '',
-\   },
-\   {'filetype' : 'css', 'start' : '<style \?.*>', 'end' : '</style>'},
-\ ]
-
-let g:ft = ''
-
-
-highlight CocFadeOut ctermfg=Red  guifg=#ff0000
-
-""" END COC CONFIG
-
+highlight CursorLine guibg=Grey20
+highlight Visual guibg=Grey25
+highlight Search guibg=Grey40 guifg=grey80

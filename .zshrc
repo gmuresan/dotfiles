@@ -1,3 +1,4 @@
+source ~/.znap/zsh-snap/znap.zsh
 stty -ixon
 
 # Path to your oh-my-zsh installation.
@@ -55,7 +56,6 @@ export NODE_PATH='/usr/local/lib/node_modules'
 # export MANPATH="/usr/local/man:$MANPATH"
 #export WORKON_HOME=~/.Envs
 
-
 export GOPATH="/Users/676616/go"
 export PATH=$GOPATH/bin:$PATH
 
@@ -97,11 +97,23 @@ alias gitpsu='git push --set-upstream origin $(current_branch)'
 alias br='bin/rails'
 alias mp='cd ~/extension/browser-extension'
 alias mpp='cd ~/extension/nft-extension-pricing'
+alias pp='cd ~/proj/collections'
+alias sp='cd ~/proj/contract'
+
+alias wr='cd ~/proj/wallet && npm run dev -- --open'
+alias cr='cd ~/proj/collections && npm run dev'
+alias vr='cd ~/proj/voting && npm run dev'
+alias rr='cd ~/proj/rich_nft && npm run dev'
+alias ar='cd ~/proj/music_upload && npm run dev'
+
+alias wp='cd ~/proj/wallet'
+alias ccp='cd ~/proj/collections'
+alias vp='cd ~/proj/voting'
+alias rp='cd ~/proj/rich_nft'
+alias ap='cd ~/proj/music_upload'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 alias b="git branch"
 alias ba="git branch -a"
@@ -136,8 +148,6 @@ ttyctl -f
 [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"# Path to your oh-my-zsh installation.
 # export ZSH=/Users/gmuresan/.oh-my-zsh
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
 export PATH="$HOME/.yarn/bin:$PATH"
 
 export PATH="$HOME/.rbenv/shims:$PATH"
@@ -163,9 +173,46 @@ export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 #export PROJECT_HOME=$HOME/makersplace
 #source /usr/local/bin/virtualenvwrapper.sh
 
-
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+# pnpm
+export PNPM_HOME="/Users/676616/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+
+bindkey "^R" history-incremental-pattern-search-backward
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+
+#### ZNAP ####
+# Download Znap, if it's not there yet.
+[[ -f ~/Git/zsh-snap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/Git/zsh-snap
+
+source ~/Git/zsh-snap/znap.zsh  # Start Znap
+
+# `znap prompt` makes your prompt visible in just 15-40ms!
+znap prompt sindresorhus/pure
+
+# `znap source` automatically downloads and starts your plugins.
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
+# `znap eval` caches and runs any kind of command output for you.
+znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
+
+# `znap function` lets you lazy-load features you don't always need.
+znap function _pyenv pyenv 'eval "$( pyenv init - --no-rehash )"'
+compctl -K    _pyenv pyenv
+
+
+znap source marlonrichert/zsh-autocomplete
+#### ZNAP ####
