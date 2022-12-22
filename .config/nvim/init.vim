@@ -63,6 +63,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'EdenEast/nightfox.nvim' " Vim-Plug
+Plug 'github/copilot.vim'
 
 
 " Initialize plugin system
