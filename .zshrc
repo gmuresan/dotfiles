@@ -1,4 +1,3 @@
-source ~/.znap/zsh-snap/znap.zsh
 stty -ixon
 
 # Path to your oh-my-zsh installation.
@@ -54,7 +53,6 @@ plugins=(git vi-mode)
 
 export NODE_PATH='/usr/local/lib/node_modules'
 # export MANPATH="/usr/local/man:$MANPATH"
-#export WORKON_HOME=~/.Envs
 
 export GOPATH="/Users/676616/go"
 export PATH=$GOPATH/bin:$PATH
@@ -112,6 +110,10 @@ alias vp='cd ~/proj/voting'
 alias rp='cd ~/proj/rich_nft'
 alias ap='cd ~/proj/music_upload'
 
+alias va='cd ~/viasat'
+alias vap='cd ~/viasat/portal'
+alias vapp='cd ~/viasat/preportal'
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -141,7 +143,7 @@ alias stm="git status --untracked=no"
 alias stfu="git status --untracked=no"
 alias pullsrb="git !git stash save && git pull --rebase && git stash pop && echo 'Success!'"
 
-alias vim="stty -ixon; nvim"
+alias vim="nvm use 16.14.1; stty -ixon; nvim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
@@ -153,25 +155,49 @@ export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-#. "/usr/local/opt/nvm/nvm.sh"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 unsetopt correct_all
 
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
 
-export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
-alias java11='export JAVA_HOME=$JAVA_11_HOME'
-java11
-export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+# export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
+# alias java11='export JAVA_HOME=$JAVA_11_HOME'
+# java11
+# export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 
-#export VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
-#export WORKON_HOME=$HOME/.virtualenvs
-#export PROJECT_HOME=$HOME/makersplace
-#source /usr/local/bin/virtualenvwrapper.sh
+alias python=/opt/homebrew/bin/python3
+alias python3=/opt/homebrew/bin/python3
+alias pip3=/opt/homebrew/bin/pip3
+alias pip=/opt/homebrew/bin/pip3
+export PATH="/Users/gmuresan/Library/Python/3.9/bin:$PATH"
+export VIRTUALENVWRAPPER_PYTHON=/opt/homebrew/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+source /Users/gmuresan/Library/Python/3.9/bin/virtualenvwrapper.sh
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
@@ -213,6 +239,8 @@ znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 znap function _pyenv pyenv 'eval "$( pyenv init - --no-rehash )"'
 compctl -K    _pyenv pyenv
 
-
 znap source marlonrichert/zsh-autocomplete
+
+bindkey '^a' forward-word
+
 #### ZNAP ####

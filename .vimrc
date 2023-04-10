@@ -326,6 +326,6 @@ let python_highlight_all=1
 set completeopt+=noselect
 set completeopt+=menuone
 
-highlight CursorLine guibg=Grey20
+highlight CursorLine guibg=Grey25
 highlight Visual guibg=Grey25
 highlight Search guibg=Grey40 guifg=grey80

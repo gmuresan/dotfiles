@@ -28,6 +28,7 @@ if exists('g:plugs["tern_for_vim"]')
 endif
 
 let g:python3_host_prog = '/usr/local/bin/python3'
+let g:node_host_prog = '~/.nvm/versions/node/v16.14.1/bin/node'
 
 " let g:deoplete#enable_at_startup = 1
 "
@@ -64,6 +65,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'EdenEast/nightfox.nvim' " Vim-Plug
 Plug 'github/copilot.vim'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim' " fuzzy search
 
 
 " Initialize plugin system
@@ -112,11 +116,18 @@ let g:ft = ''
 
 """ highlight CocFadeOut ctermfg=Red  guifg=#ff0000
 
+"let b:coc_suggest_disable = 1
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-Enter> copilot#Accept()
+imap <silent><script><expr> <C-H> copilot#Accept()
+imap <silent><script><expr> <C-K> copilot#Previous()
+imap <silent><script><expr> <C-J> copilot#Next()
 
 """ END COC CONFIG
 
