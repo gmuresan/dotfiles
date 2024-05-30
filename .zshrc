@@ -1,3 +1,5 @@
+# Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 stty -ixon
 
 # Path to your oh-my-zsh installation.
@@ -113,6 +115,7 @@ alias ap='cd ~/proj/music_upload'
 alias va='cd ~/viasat'
 alias vap='cd ~/viasat/portal'
 alias vapp='cd ~/viasat/preportal'
+alias sb='cd ~/score/sportsbook-web'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -121,6 +124,7 @@ alias b="git branch"
 alias ba="git branch -a"
 alias ci="git commit"
 alias co="git checkout"
+alias cp="git cherry-pick"
 alias d="git diff"
 alias dc="git diff --cached"
 alias fp="git format-patch"
@@ -143,7 +147,7 @@ alias stm="git status --untracked=no"
 alias stfu="git status --untracked=no"
 alias pullsrb="git !git stash save && git pull --rebase && git stash pop && echo 'Success!'"
 
-alias vim="nvm use 16.14.1; stty -ixon; nvim"
+alias vim="stty -ixon; nvim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
@@ -178,7 +182,7 @@ load-nvmrc() {
   fi
 }
 add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+#load-nvmrc
 
 unsetopt correct_all
 
@@ -190,20 +194,21 @@ export PATH="/usr/local/opt/libxml2/bin:$PATH"
 # java11
 # export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 
-alias python=/opt/homebrew/bin/python3
-alias python3=/opt/homebrew/bin/python3
-alias pip3=/opt/homebrew/bin/pip3
-alias pip=/opt/homebrew/bin/pip3
-export PATH="/Users/gmuresan/Library/Python/3.9/bin:$PATH"
-export VIRTUALENVWRAPPER_PYTHON=/opt/homebrew/bin/python3
+#alias python=/opt/homebrew/bin/python3
+#alias python3=/opt/homebrew/bin/python3
+#alias pip3=/opt/homebrew/bin/pip3
+#alias pip=/opt/homebrew/bin/pip3
+#export PATH="/Users/gmuresan/Library/Python/3.9/bin:$PATH"
+#export VIRTUALENVWRAPPER_PYTHON=/opt/homebrew/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs
-source /Users/gmuresan/Library/Python/3.9/bin/virtualenvwrapper.sh
+source virtualenvwrapper.sh
+##source /Users/gmuresan/Library/Python/3.9/bin/virtualenvwrapper.sh
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+#if command -v pyenv 1>/dev/null 2>&1; then
+#  eval "$(pyenv init -)"
+#fi
 
 # pnpm
 export PNPM_HOME="/Users/676616/Library/pnpm"
@@ -228,7 +233,7 @@ source ~/Git/zsh-snap/znap.zsh  # Start Znap
 znap prompt sindresorhus/pure
 
 # `znap source` automatically downloads and starts your plugins.
-znap source marlonrichert/zsh-autocomplete
+#znap source marlonrichert/zsh-autocomplete
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
 
@@ -236,11 +241,26 @@ znap source zsh-users/zsh-syntax-highlighting
 znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 
 # `znap function` lets you lazy-load features you don't always need.
-znap function _pyenv pyenv 'eval "$( pyenv init - --no-rehash )"'
-compctl -K    _pyenv pyenv
-
-znap source marlonrichert/zsh-autocomplete
+# znap function _pyenv pyenv 'eval "$( pyenv init - --no-rehash )"'
+# compctl -K    _pyenv pyenv
 
 bindkey '^a' forward-word
 
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+autoload -U compaudit && compinit
+
 #### ZNAP ####
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(direnv hook zsh)"
+
+
+[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
+
+# Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

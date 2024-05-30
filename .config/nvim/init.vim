@@ -28,7 +28,7 @@ if exists('g:plugs["tern_for_vim"]')
 endif
 
 let g:python3_host_prog = '/usr/local/bin/python3'
-let g:node_host_prog = '~/.nvm/versions/node/v16.14.1/bin/node'
+" let g:node_host_prog = '~/.nvm/versions/node/v16.14.1/bin/node'
 
 " let g:deoplete#enable_at_startup = 1
 "
@@ -47,34 +47,40 @@ call plug#begin()
 "
 "" Or build from source code by using yarn: https://yarnpkg.com
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-Plug 'codechips/coc-svelte', {'do': 'npm install'}
+"Plug 'codechips/coc-svelte', {'do': 'npm install'}
 Plug 'morhetz/gruvbox'
 
 " Plug 'godlygeek/tabular' " markdown
 " Plug 'preservim/vim-markdown' " markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' } " markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
 " Plug 'junegunn/limelight.vim' " highlighting
 " Plug 'junegunn/goyo.vim' " highlighting
 "
-Plug 'ray-x/go.nvim' " golang
+"Plug 'ray-x/go.nvim' " golang
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'EdenEast/nightfox.nvim' " Vim-Plug
-Plug 'github/copilot.vim'
+Plug 'vim-airline/vim-airline' " statusline
+Plug 'vim-airline/vim-airline-themes' " theme
+Plug 'EdenEast/nightfox.nvim' " theme
+Plug 'github/copilot.vim' " coding assistant
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " fuzzy search
+Plug 'jparise/vim-graphql' " graphql
+Plug 'tpope/vim-commentary' " comment
+Plug 'leafgarland/typescript-vim' " typescript
+Plug 'styled-components/vim-styled-components' " styled-components
+Plug 'peitalin/vim-jsx-typescript' " jsx
+Plug 'barrett-ruth/import-cost.nvim', {'do': 'sh install.sh npm'}
+Plug 'hashivim/vim-terraform' " terraform
 
 
 " Initialize plugin system
 call plug#end()
 
 """ COC CONFIG
-let g:coc_node_path = '$HOME/.nvm/versions/node/v16.14.1/bin/node'
 
 nmap ff  (coc-format-selected)
 nmap rn (coc-rename)
@@ -129,8 +135,10 @@ imap <silent><script><expr> <C-H> copilot#Accept()
 imap <silent><script><expr> <C-K> copilot#Previous()
 imap <silent><script><expr> <C-J> copilot#Next()
 
+lua require('import-cost').setup {}
+
 """ END COC CONFIG
 
-colorscheme carbonfox
+"colorscheme carbonfox
 source ~/.vimrc
 
