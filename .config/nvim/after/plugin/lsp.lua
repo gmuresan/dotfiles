@@ -79,6 +79,9 @@ mason_tool_installer.setup({
 		"prettier", -- prettier formatter
 		"stylua", -- lua formatter
 		"eslint_d", -- js linter
+	},
+})
+
 -- Lua start
 require("lspconfig").lua_ls.setup({
 	on_init = function(client)

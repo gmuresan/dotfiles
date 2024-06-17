@@ -2,10 +2,10 @@ local conform = require("conform")
 
 conform.setup({
 	formatters_by_ft = {
-		javascript = { "prettier" },
-		typescript = { "prettier" },
-		javascriptreact = { "prettier" },
-		typescriptreact = { "prettier" },
+		javascript = { "prettier", "eslint_d" },
+		typescript = { "prettier", "eslint_d" },
+		javascriptreact = { "prettier", "eslint_d" },
+		typescriptreact = { "prettier", "eslint_d" },
 		svelte = { "prettier" },
 		css = { "prettier" },
 		html = { "prettier" },

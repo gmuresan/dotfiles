@@ -12,9 +12,9 @@ return {
 	{ "mbbill/undotree" }, -- undo changes
 	{ "tpope/vim-fugitive" }, -- git wrapper
 
-	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" }, -- LSP
+	{ "VonHeikemen/lsp-zero.nvim", branch = "v3.x" }, -- LSP config starting point
 	{ "neovim/nvim-lspconfig" }, -- LSP
-	{ "hrsh7th/cmp-nvim-lsp" }, -- LSP
+	{ "hrsh7th/cmp-nvim-lsp" }, -- LSP cmp = completion
 	{ "hrsh7th/cmp-buffer" }, -- LSP
 	{ "hrsh7th/cmp-path" }, -- LSP
 	{ "hrsh7th/cmp-cmdline" }, -- LSP
@@ -52,4 +52,6 @@ return {
 			})
 		end,
 	}, -- file tree
+
+	{ "yegappan/mru" }, -- most recently used files
 }
