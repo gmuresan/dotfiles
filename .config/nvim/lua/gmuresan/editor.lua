@@ -56,3 +56,16 @@ vim.api.nvim_set_keymap("n", "<Leader>p", ":lua vim.diagnostic.goto_prev()<CR>",
 -- End of Lint/Error message config
 
 vim.api.nvim_set_keymap("n", "\\d", "odebugger<Esc>", { noremap = true, silent = true })
+
+-- Function to create directories if they do not exist
+local function create_dirs()
+	local filepath = vim.fn.expand("%:p:h")
+	if not vim.fn.isdirectory(filepath) then
+		os.execute("mkdir -p " .. filepath)
+	end
+end
+
+-- Auto command to create directories before saving a file
+vim.api.nvim_create_autocmd("BufWritePre", {
+	callback = create_dirs,
+})

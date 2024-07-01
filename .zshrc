@@ -138,31 +138,6 @@ ttyctl -f
 
 export PATH="$HOME/.yarn/bin:$PATH"
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
 unsetopt correct_all
 
 #if command -v pyenv 1>/dev/null 2>&1; then
@@ -186,6 +161,11 @@ source ~/Git/zsh-snap/znap.zsh  # Start Znap
 znap source marlonrichert/zsh-autocomplete # brew install zsh-autocomplete
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting # brew install zsh-syntax-highlighting
+
+export NVM_AUTO_USE=true
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+znap source lukechilds/zsh-nvm # nvm manager
 
 # `znap eval` caches and runs any kind of command output for you.
 #znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
