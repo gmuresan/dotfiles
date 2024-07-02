@@ -2,9 +2,12 @@ return {
 	{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.6", -- fuzzy search
-		-- or                              , branch = '0.1.x',
+		tag = "0.1.8", -- fuzzy search
 		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	{
+		"nvim-telescope/telescope-fzf-native.nvim", -- fuzzy search native bindings
+		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
 	},
 	{ "rose-pine/neovim", name = "rose-pine" }, -- Theme
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" }, -- LSP
