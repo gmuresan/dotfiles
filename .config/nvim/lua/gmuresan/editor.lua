@@ -1,8 +1,8 @@
 -- Set the number of spaces that a <Tab> counts for
-vim.opt.tabstop = 4
+vim.opt.tabstop = 2
 
 -- Set the number of spaces to use for each step of (auto)indent
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 
 -- Use spaces instead of tabs
 vim.opt.expandtab = true
