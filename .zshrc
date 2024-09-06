@@ -49,7 +49,7 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git) # vi-mode
 
-source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh # vim mode
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh # vim mode   brew install zsh-vi-mode
 
 # User configuration
 
@@ -77,7 +77,6 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# alias vim='/usr/local/Cellar/vim/7.4.1589/bin/vim'
 alias k9='kill -9 %'
 
 alias less='less -R'
@@ -138,6 +137,8 @@ ttyctl -f
 
 export PATH="$HOME/.yarn/bin:$PATH"
 
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+
 unsetopt correct_all
 
 #if command -v pyenv 1>/dev/null 2>&1; then
@@ -145,6 +146,9 @@ unsetopt correct_all
 #fi
 
 bindkey "^R" history-incremental-pattern-search-backward
+
+autoload -U promptinit; promptinit
+prompt pure
 
 #### ZNAP ####
 # Download Znap, if it's not there yet.
@@ -163,12 +167,12 @@ znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting # brew install zsh-syntax-highlighting
 
 export NVM_AUTO_USE=true
-export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD=false
 export NVM_COMPLETION=true
 znap source lukechilds/zsh-nvm # nvm manager
 
 # `znap eval` caches and runs any kind of command output for you.
-#znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
+znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 
 # `znap function` lets you lazy-load features you don't always need.
 # znap function _pyenv pyenv 'eval "$( pyenv init - --no-rehash )"'
