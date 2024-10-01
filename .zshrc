@@ -260,3 +260,4 @@ bindkey '^A' vi-forward-word
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #eval "$(direnv hook zsh)"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
