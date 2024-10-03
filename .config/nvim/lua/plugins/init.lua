@@ -30,6 +30,20 @@ return {
 
 	{ "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" } }, --formatter
 	{ "mfussenegger/nvim-lint", event = { "BufReadPre", "BufNewFile" } }, -- linter
+	{
+		"hedyhli/outline.nvim", -- show outline of file
+		config = function()
+			-- Example mapping to toggle outline
+			vim.keymap.set("n", "<leader>o", "<cmd>Outline!<CR>", { desc = "Toggle Outline" })
+
+			require("outline").setup({
+				outline_window = {
+					position = "right",
+					width = 15,
+				},
+			})
+		end,
+	},
 
 	{
 		"nvim-tree/nvim-tree.lua",
