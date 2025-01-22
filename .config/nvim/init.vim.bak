@@ -73,7 +73,7 @@ Plug 'tpope/vim-commentary' " comment
 Plug 'leafgarland/typescript-vim' " typescript
 Plug 'styled-components/vim-styled-components' " styled-components
 Plug 'peitalin/vim-jsx-typescript' " jsx
-Plug 'barrett-ruth/import-cost.nvim', {'do': 'sh install.sh npm'}
+" Plug 'barrett-ruth/import-cost.nvim', {'do': 'sh install.sh npm'} " js import cost
 Plug 'hashivim/vim-terraform' " terraform
 
 
@@ -135,7 +135,7 @@ imap <silent><script><expr> <C-H> copilot#Accept()
 imap <silent><script><expr> <C-K> copilot#Previous()
 imap <silent><script><expr> <C-J> copilot#Next()
 
-lua require('import-cost').setup {}
+" lua require('import-cost').setup {}
 
 """ END COC CONFIG
 

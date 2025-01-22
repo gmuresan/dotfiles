@@ -1,5 +1,3 @@
-# Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 stty -ixon
 
 # Path to your oh-my-zsh installation.
@@ -49,12 +47,14 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode)
+plugins=(git) # vi-mode
+
+#source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh # vim mode   brew install zsh-vi-mode
 
 # User configuration
 
-
 export NODE_OPTIONS="--max_old_space_size=12000"
+export NODE_PATH='/usr/local/lib/node_modules'
 
 source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
@@ -69,12 +69,6 @@ export EDITOR='vim'
 #   export EDITOR='mvim'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -84,35 +78,26 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# alias vim='/usr/local/Cellar/vim/7.4.1589/bin/vim'
 alias k9='kill -9 %'
 
 alias less='less -R'
 alias ag='/opt/homebrew/bin/ag --pager=less'
 
 alias gitpsu='git push --set-upstream origin $(current_branch)'
-alias br='bin/rails'
-alias mp='cd ~/extension/browser-extension'
-alias mpp='cd ~/extension/nft-extension-pricing'
-alias pp='cd ~/proj/collections'
-alias sp='cd ~/proj/contract'
 
-alias wr='cd ~/proj/wallet && npm run dev -- --open'
-alias cr='cd ~/proj/collections && npm run dev'
-alias vr='cd ~/proj/voting && npm run dev'
-alias rr='cd ~/proj/rich_nft && npm run dev'
-alias ar='cd ~/proj/music_upload && npm run dev'
-
-alias wp='cd ~/proj/wallet'
-alias ccp='cd ~/proj/collections'
-alias vp='cd ~/proj/voting'
-alias rp='cd ~/proj/rich_nft'
-alias ap='cd ~/proj/music_upload'
-
+# Visasat
 alias va='cd ~/viasat'
 alias vap='cd ~/viasat/portal'
 alias vapp='cd ~/viasat/preportal'
+
+# Scorebet
 alias sb='cd ~/score/sportsbook-web'
+
+# Amniscient
+alias am='cd ~/amni'
+alias amf='cd ~/amni/amniplatform-frontend'
+alias amp='cd ~/amni/amniplatform'
+alias ams='cd ~/amni/amnisphere'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -121,7 +106,7 @@ alias b="git branch"
 alias ba="git branch -a"
 alias ci="git commit"
 alias co="git checkout"
-alias cp="git cherry-pick"
+#alias cp="git cherry-pick"
 alias d="git diff"
 alias dc="git diff --cached"
 alias fp="git format-patch"
@@ -138,7 +123,7 @@ alias mt="git mergetool"
 alias p="git format-patch -1"
 alias serve="git !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git"
 alias sra="git svn rebase --all"
-#alias sh="git !git-sh"
+# alias sh="git !git-sh"
 alias st="git status"
 alias stm="git status --untracked=no"
 alias stfu="git status --untracked=no"
@@ -153,70 +138,83 @@ ttyctl -f
 
 export PATH="$HOME/.yarn/bin:$PATH"
 
-export PATH="$HOME/.rbenv/shims:$PATH"
-export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-#load-nvmrc
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
 
 unsetopt correct_all
-
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
-export PATH="/usr/local/opt/libxml2/bin:$PATH"
-
-# export JAVA_11_HOME=$(/usr/libexec/java_home -v11)
-# alias java11='export JAVA_HOME=$JAVA_11_HOME'
-# java11
-# export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
-
-#alias python=/opt/homebrew/bin/python3
-#alias python3=/opt/homebrew/bin/python3
-#alias pip3=/opt/homebrew/bin/pip3
-#alias pip=/opt/homebrew/bin/pip3
-#export PATH="/Users/gmuresan/Library/Python/3.9/bin:$PATH"
-#export VIRTUALENVWRAPPER_PYTHON=/opt/homebrew/bin/python3
-export WORKON_HOME=$HOME/.virtualenvs
-source virtualenvwrapper.sh
-##source /Users/gmuresan/Library/Python/3.9/bin/virtualenvwrapper.sh
-
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 #if command -v pyenv 1>/dev/null 2>&1; then
 #  eval "$(pyenv init -)"
 #fi
 
-# pnpm
-export PNPM_HOME="/Users/676616/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
 
-bindkey "^R" history-incremental-pattern-search-backward
+#########
+# vi mode
+#########
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+bindkey -v
 
+# switch to command mode with jj
+bindkey '^j' vi-cmd-mode
+
+# `v` is already mapped to visual mode, so we need to use a different key to
+# open Vim
+bindkey -M vicmd "^V" edit-command-line
+
+# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+export KEYTIMEOUT=1
+
+# incremental search in insert mode
+bindkey "^F" history-incremental-search-forward
+bindkey "^R" history-incremental-search-backward
+
+# beginning search with arrow keys and j/k
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+
+# beginning search in insert mode, redundant with the up/down arrows above
+# but a little easier to press.
+bindkey "^P" history-search-backward
+bindkey "^N" history-search-forward
+
+# incremental search in vi command mode
+bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '/' history-incremental-search-forward
+# navigate matches in incremental search
+bindkey -M viins '^R' history-incremental-pattern-search-backward
+bindkey -M viins '^F' history-incremental-pattern-search-forward
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-keymap-select
+
+# Use beam shape cursor on startup.
+echo -ne '\e[5 q'
+
+# Use beam shape cursor for each new prompt.
+preexec() {
+  echo -ne '\e[5 q'
+}
+
+_fix_cursor() {
+  echo -ne '\e[5 q'
+}
+precmd_functions+=(_fix_cursor)
+
+
+autoload -U promptinit; promptinit
+prompt pure
 
 #### ZNAP ####
 # Download Znap, if it's not there yet.
@@ -227,12 +225,18 @@ export PATH="$PATH:$HOME/.rvm/bin"
 source ~/Git/zsh-snap/znap.zsh  # Start Znap
 
 # `znap prompt` makes your prompt visible in just 15-40ms!
-znap prompt sindresorhus/pure
+#znap prompt sindresorhus/pure # npm install -g pure-prompt
 
 # `znap source` automatically downloads and starts your plugins.
-#znap source marlonrichert/zsh-autocomplete
+znap source marlonrichert/zsh-autocomplete # brew install zsh-autocomplete
 znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-syntax-highlighting
+#znap source zsh-users/zsh-syntax-highlighting # brew install zsh-syntax-highlighting
+
+export NVM_AUTO_USE=true
+export NVM_LAZY_LOAD=false
+export NVM_COMPLETION=true
+znap source lukechilds/zsh-nvm # nvm manager
+
 
 # `znap eval` caches and runs any kind of command output for you.
 znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
@@ -240,24 +244,21 @@ znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 # `znap function` lets you lazy-load features you don't always need.
 # znap function _pyenv pyenv 'eval "$( pyenv init - --no-rehash )"'
 # compctl -K    _pyenv pyenv
+#
 
-bindkey '^a' forward-word
 
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -U compaudit && compinit
 
 #### ZNAP ####
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+bindkey '^A' vi-forward-word
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init -)"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval "$(direnv hook zsh)"
-
-
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
-# Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+#eval "$(direnv hook zsh)"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
