@@ -53,11 +53,8 @@ plugins=(git vi-mode)
 
 # User configuration
 
-export NODE_PATH='/usr/local/lib/node_modules'
-# export MANPATH="/usr/local/man:$MANPATH"
 
-export GOPATH="/Users/676616/go"
-export PATH=$GOPATH/bin:$PATH
+export NODE_OPTIONS="--max_old_space_size=12000"
 
 source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
@@ -141,7 +138,7 @@ alias mt="git mergetool"
 alias p="git format-patch -1"
 alias serve="git !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git"
 alias sra="git svn rebase --all"
-alias sh="git !git-sh"
+#alias sh="git !git-sh"
 alias st="git status"
 alias stm="git status --untracked=no"
 alias stfu="git status --untracked=no"
