@@ -7,7 +7,7 @@ require("mason-lspconfig").setup({
 	-- Replace the language servers listed here
 	-- with the ones you want to install
 	ensure_installed = {
-		"tsserver",
+		"typescript-language-server",
 		"rust_analyzer",
 		"eslint",
 		"graphql",
@@ -42,6 +42,10 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "buffer" },
+		{ name = "path" },
+		{ name = "cmdline" },
 	},
 	mapping = {
 		["<Tab>"] = cmp_action.tab_complete(),
