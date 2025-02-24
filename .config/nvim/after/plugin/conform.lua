@@ -15,6 +15,7 @@ conform.setup({
 		graphql = { "prettier" },
 		lua = { "stylua" },
 		python = { "isort", "black" },
+		scss = { "prettier" },
 	},
 	format_on_save = {
 		lsp_fallback = true,

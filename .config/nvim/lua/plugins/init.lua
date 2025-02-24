@@ -27,7 +27,10 @@ return {
 	{ "williamboman/mason-lspconfig.nvim" }, -- LSP installer
 
 	{ "github/copilot.vim" }, -- copilot
-
+	{
+		"kelly-lin/telescope-ag", -- ag search
+		dependencies = { "nvim-telescope/telescope.nvim" },
+	},
 	{ "stevearc/conform.nvim", event = { "BufReadPre", "BufNewFile" } }, --formatter
 	{ "mfussenegger/nvim-lint", event = { "BufReadPre", "BufNewFile" } }, -- linter
 
