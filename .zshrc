@@ -53,6 +53,7 @@ plugins=(git) # vi-mode
 
 # User configuration
 
+export NODE_OPTIONS="--max_old_space_size=12000"
 export NODE_PATH='/usr/local/lib/node_modules'
 
 source $ZSH/oh-my-zsh.sh
@@ -105,7 +106,7 @@ alias b="git branch"
 alias ba="git branch -a"
 alias ci="git commit"
 alias co="git checkout"
-alias cp="git cherry-pick"
+#alias cp="git cherry-pick"
 alias d="git diff"
 alias dc="git diff --cached"
 alias fp="git format-patch"
