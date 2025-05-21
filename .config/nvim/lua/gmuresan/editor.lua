@@ -1,18 +1,5 @@
--- Set the number of spaces that a <Tab> counts for
-vim.opt.expandtab = true
 -- Set the number of spaces to use for each step of (auto)indent
-vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
-vim.opt.tabstop = 2
-
--- Use spaces instead of tabs
-vim.opt.expandtab = true
-
--- Smart tab behavior: <Tab> inserts `shiftwidth` spaces when at the start of a line
-vim.opt.smarttab = true
-
--- Enable automatic indentation
-vim.opt.autoindent = true
 
 -- Copy indent from the current line when starting a new line
 vim.opt.copyindent = true
@@ -26,9 +13,6 @@ vim.opt.number = true
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
 
 -- Start Lint/Error message config
 vim.diagnostic.config({
@@ -44,7 +28,7 @@ vim.diagnostic.config({
 -- CursorHold event happens when after `updatetime` milliseconds. The
 -- default is 4000 which is much too long
 vim.cmd("autocmd CursorHold * lua vim.diagnostic.open_float()")
-vim.o.updatetime = 1000
+vim.o.updatetime = 2000
 
 -- Show all diagnostics on current line in floating window
 vim.api.nvim_set_keymap("n", "<Leader>d", ":lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
