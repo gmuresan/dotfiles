@@ -5,7 +5,12 @@ return {
 		{ "zbirenbaum/copilot.lua" },
 	},
 	build = "make tiktoken",
-	opts = {},
+	opts = {
+    history= {
+      enabled = true,
+      max_entries = 100,
+    }
+	},
 	keys = {
 		{ "<leader>zc", ":CopilotChat<CR>", mode = "n", desc = "Copilot Chat" },
 		{ "<leader>ze", ":CopilotChatExplain<CR>", mode = "v", desc = "Explain Code" },

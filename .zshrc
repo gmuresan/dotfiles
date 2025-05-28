@@ -91,7 +91,8 @@ alias vap='cd ~/viasat/portal'
 alias vapp='cd ~/viasat/preportal'
 
 # Scorebet
-alias sb='cd ~/score/sportsbook-web'
+alias mr='cd ~/score/web-monorepo/'
+alias sb='cd ~/score/web-monorepo/projects/web/apps/sportsbook-web/'
 
 # Amniscient
 alias am='cd ~/amni'
