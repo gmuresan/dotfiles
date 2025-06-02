@@ -100,6 +100,9 @@ alias amf='cd ~/amni/amniplatform-frontend'
 alias amp='cd ~/amni/amniplatform'
 alias ams='cd ~/amni/amnisphere'
 
+alias cnvm='cd ~/.config/nvim/'
+alias vnvm='cd ~/.config/nvim/ && nvim'
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
