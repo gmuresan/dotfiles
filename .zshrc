@@ -81,7 +81,8 @@ export EDITOR='vim'
 alias k9='kill -9 %'
 
 alias less='less -R'
-alias ag='/opt/homebrew/bin/ag --pager=less'
+# alias ag='/opt/homebrew/bin/ag --pager=less'
+alias ag='ag --path-to-ignore ~/.agignore --pager=less'
 
 alias gitpsu='git push --set-upstream origin $(current_branch)'
 
@@ -99,6 +100,9 @@ alias am='cd ~/amni'
 alias amf='cd ~/amni/amniplatform-frontend'
 alias amp='cd ~/amni/amniplatform'
 alias ams='cd ~/amni/amnisphere'
+
+alias cnvm='cd ~/.config/nvim/'
+alias vnvm='cd ~/.config/nvim/ && nvim'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -263,3 +267,4 @@ bindkey '^A' vi-forward-word
 
 #eval "$(direnv hook zsh)"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
