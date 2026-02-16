@@ -1,0 +1,283 @@
+set nocompatible | filetype indent plugin on | syn on
+
+:inoremap <c-s> <Esc>:w<CR>
+:noremap <c-s> <Esc>:w<CR>
+
+:nmap cp :let @+ = expand("%")<cr>
+
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
+autocmd BufWritePre * :FixWhitespace
+
+autocmd Filetype php setlocal shiftwidth=4 ts=4 sts=0 sw=4 expandtab
+autocmd Filetype py setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd Filetype ts setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd Filetype js setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd Filetype svelte setlocal shiftwidth=4 tabstop=4 softtabstop=4
+
+" Keyboard shortcuts
+nnoremap <leader>n :NERDTreeToggle <cr>
+nnoremap <leader>m :MRU <cr>
+nnoremap <leader>d odebugger;<ESC>
+nnoremap <leader>p oimport pdb; pdb.set_trace()<ESC>
+nnoremap <leader>o ofrom celery.contrib import rdb; rdb.set_trace()<ESC>
+nnoremap <leader>l :AutoformatLine<CR>
+vnoremap <leader>l :AutoformatLine<CR>
+
+let g:autoformat_verbosemode= 0
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+let g:formatters_py = ['yapf']
+let g:formatterpath = ['/Users/gmuresan/.virtualenvs/mp3.8-3/bin/yapf', '/Users/gmuresan/.virtualenvs/mp3.8-3/bin/']
+
+
+set cursorline
+set mouse=nicr
+set number
+set smarttab
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set backspace=2
+set hlsearch
+let NERDTreeIgnore = ['\.pyc$']
+syntax on
+let g:jsx_ext_required = 0
+
+set smartindent
+
+set clipboard=unnamed
+
+" Airline Settings
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+
+
+" Syntastic Settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 3
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
+set autoread
+
+au BufWritePost *.js checktime
+au BufWritePost *.jsx checktime
+au BufWritePost *.ts checktime
+au BufWritePost *.typescript checktime
+au BufWritePost *.svelte checktime
+au BufWritePost *.rb checktime
+
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+    au BufNewFile,BufRead *.ts set filetype=typescript
+augroup END
+
+" let g:svelte_preprocessor_tags = [
+  "\ { 'name': 'ts', 'tag': 'script', 'as': 'typescript' }
+  "\ ]
+
+"let g:ale_linters = {
+"\    "svelte": ['svelteserver'],
+"\}
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\   'ts': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\   'svelte': ['prettier', 'eslint', 'svelteserver'],
+\   'css': ['prettier'],
+\}
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+let g:closetag_html_style=1
+" :au Filetype html,xml,xsl,js,jsx source ~/.vim/vim-addons/github-alvan-vim-closetag/plugin/closetag.vim
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js"
+
+let g:mta_filetypes = {
+   \ 'html' : 1,
+   \ 'xhtml' : 1,
+   \ 'xml' : 1,
+   \ 'js' : 1,
+   \ 'jsx' : 1,
+   \ 'javascript.jsx' : 1,
+   \ 'svelte' : 1,
+   \ 'ts' : 1,
+   \ 'typescript' : 1,
+   \}
+
+"echo 'runtime! ftplugin/html.vim' > ~/.vim/ftplugin/cjsx.vim
+fun! SetupVAM()
+  let c = get(g:, 'vim_addon_manager', {})
+  let g:vim_addon_manager = c
+  let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
+
+  " Force your ~/.vim/after directory to be last in &rtp always:
+  " let g:vim_addon_manager.rtp_list_hook = 'vam#ForceUsersAfterDirectoriesToBeLast'
+
+  " most used options you may want to use:
+  " let c.log_to_buf = 1
+  " let c.auto_install = 0
+  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+  if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
+    execute '!git clone --depth=1'
+        \       'https://github.com/MarcWeber/vim-addon-manager'
+        \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
+  endif
+
+  " This provides the VAMActivate command, you could be passing plugin names, too
+  call vam#ActivateAddons([], {})
+endfun
+call SetupVAM()
+
+" ACTIVATING PLUGINS
+" OPTION 1, use VAMActivate
+VAMActivate mru
+VAMActivate github:ctrlpvim/ctrlp.vim
+"VAMActivate Syntastic EasyMotion Solarized
+VAMActivate fugitive " Git wrapper
+VAMActivate github:scrooloose/nerdtree " file explorer
+"VAMActivate rails
+"VAMActivate html5
+"VAMActivate ag
+VAMActivate trailing-whitespace
+"VAMActivate molokai
+" VAMActivate github:mustache/vim-mustache-handlebars
+" VAMActivate github:powerline/powerline
+"VAMActivate github:Valloric/YouCompleteMe
+
+"VAMActivate github:prabirshrestha/asyncomplete.vim
+"VAMActivate github:runoshun/tscompletejob
+"VAMActivate github:prabirshrestha/asyncomplete-tscompletejob.vim
+
+"call asyncomplete#register_source(asyncomplete#sources#tscompletejob#get_source_options({
+    "\ 'name': 'tscompletejob',
+    "\ 'allowlist': ['typescript', 'ts', 'svelte'],
+    "\ 'completor': function('asyncomplete#sources#tscompletejob#completor'),
+    "\ }))
+"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
+VAMActivate github:airblade/vim-gitgutter
+VAMActivate github:isRuslan/vim-es6
+VAMActivate github:pangloss/vim-javascript
+VAMActivate github:joshdick/onedark.vim
+VAMActivate github:nvie/vim-flake8
+VAMActivate github:Chiel92/vim-autoformat
+VAMActivate github:othree/html5.vim
+VAMActivate github:ruanyl/coverage.vim " Coverage report in gutter
+VAMActivate github:HerringtonDarkholme/yats.vim " TS highlighting
+
+" Specify the path to `coverage.json` file relative to your current working directory.
+let g:coverage_json_report_path = 'coverage/coverage-final.json'
+
+" Define the symbol display for covered lines
+let g:coverage_sign_covered = '⦿'
+
+" Define the interval time of updating the coverage lines
+let g:coverage_interval = 5000
+
+" Do not display signs on covered lines
+let g:coverage_show_covered = 0
+
+" Display signs on uncovered lines
+let g:coverage_show_uncovered = 1
+
+"VAMActivate github:google/vim-maktaba
+"VAMActivate github:google/vim-coverage
+" Also add Glaive, which is used to configure coverage's maktaba flags. See
+" `:help :Glaive` for usage.
+"VAMActivate github:google/vim-glaive
+"call glaive#Install()
+" Optional: Enable coverage's default mappings on the <Leader>C prefix.
+" Glaive coverage plugin[mappings]
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+
+" OPTION 2: use call vam#Acmxw/vim-jsxtivateAddons
+"call vam#ActivateAddons([PLUGIN_NAME], {})
+" use <c-x><c-p> to complete plugin names
+" OPTION 3: Create a file ~/.vim-srcipts putting a PLUGIN_NAME into each line
+" See lazy loading plugins section in README.md for details
+"call vam#Scripts('~/.vim-scripts', {'tag_regex': '.*'})
+
+" If the current buffer has never been saved, it will have no name,
+" call the file browser to save it, otherwise just save it.
+"
+" au FocusLost * :wa
+
+function! s:MkNonExDir(file, buf)
+   if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+       let dir=fnamemodify(a:file, ':h')
+       if !isdirectory(dir)
+           call mkdir(dir, 'p')
+       endif
+   endif
+endfunction
+augroup BWCCreateDir
+   autocmd!
+   autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+
+" Use ag for file search
+set grepprg=ag\ --nogroup\ --nocolor
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
+let g:ctrlp_show_hidden=1
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden --ignore .git -g ""'
+endif
+
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+let g:ycm_filepath_blacklist = {}
+
+syntax on
+let python_highlight_all=1
+
+set completeopt+=noselect
+set completeopt+=menuone
+
+highlight CursorLine guibg=Grey25
+highlight Visual guibg=Grey25
+highlight Search guibg=Grey40 guifg=grey80

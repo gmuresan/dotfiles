@@ -1,0 +1,78 @@
+# Ghostty Configuration for George
+# Migrated from iTerm2 + Ghostty-specific features
+
+# ─── Font ───────────────────────────────────────────────────────────
+# Ghostty ships with JetBrains Mono (with built-in Nerd Fonts!)
+# Matching your iTerm2 Monaco 12pt, but JetBrains Mono is much nicer
+font-family = JetBrains Mono
+font-size = 12
+font-thicken = true
+
+# ─── Window ─────────────────────────────────────────────────────────
+window-padding-x = 4
+window-padding-y = 4
+window-decoration = true
+window-save-state = always
+macos-titlebar-style = tabs
+
+# ─── Splits ─────────────────────────────────────────────────────────
+unfocused-split-opacity = 0.85
+split-divider-color = #ff8800
+
+# ─── Terminal ───────────────────────────────────────────────────────
+scrollback-limit = 10000
+copy-on-select = clipboard
+shell-integration = zsh
+mouse-scroll-multiplier = 3
+
+# ─── Theme ──────────────────────────────────────────────────────────
+# Ghostty ships with 300+ themes. Try: ghostty +list-themes
+# Auto-switch between light/dark based on macOS appearance
+theme = light:Gruvbox Light,dark:Gruvbox Dark
+
+# ─── Quick Terminal (Ghostty killer feature!) ───────────────────────
+# Global hotkey to summon a dropdown terminal from anywhere
+# Like iTerm2's hotkey window but smoother
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
+quick-terminal-position = top
+quick-terminal-animation-duration = 0.15
+
+# ─── macOS-specific ─────────────────────────────────────────────────
+macos-option-as-alt = left
+confirm-close-surface = false
+
+# ─── Keybinds ───────────────────────────────────────────────────────
+# Splits (like iTerm2's Cmd+D / Cmd+Shift+D)
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+
+# Navigate splits (Cmd + vim keys, comfy on Kinesis)
+keybind = cmd+h=goto_split:left
+keybind = cmd+l=goto_split:right
+keybind = cmd+k=goto_split:top
+keybind = cmd+j=goto_split:bottom
+
+# Resize splits
+keybind = cmd+ctrl+left=resize_split:left,20
+keybind = cmd+ctrl+right=resize_split:right,20
+keybind = cmd+ctrl+up=resize_split:up,20
+keybind = cmd+ctrl+down=resize_split:down,20
+
+# Tabs
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_surface
+# Switch tabs
+keybind = super+left=previous_tab
+keybind = super+right=next_tab
+
+# Move tabs
+keybind = cmd+shift+left=move_tab:-1
+keybind = cmd+shift+right=move_tab:1
+
+# Font size
+keybind = cmd+equal=increase_font_size:1
+keybind = cmd+minus=decrease_font_size:1
+keybind = cmd+0=reset_font_size
+
+# Reload config live
+keybind = cmd+shift+comma=reload_config
